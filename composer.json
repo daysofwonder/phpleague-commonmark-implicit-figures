@@ -1,0 +1,31 @@
+{
+    "name": "daysofwonder/phpleague-commonmark-implicit-figures",
+    "description": "Render images occurring by itself in a paragraph as `<figure><img ...></figure>`, similar to pandoc's implicit figures",
+    "type": "library",
+    "require": {
+        "php": "^7.2",
+        "league/commonmark": "^0.18.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "mikehaertl/php-shellcommand": "^1.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florent Ruard-Dumaine",
+            "email": "florent@daysofwonder.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DoW\\CommonMark\\ImplicitFigures\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DoW\\CommonMark\\Tests\\Unit\\": "tests/unit",
+            "DoW\\CommonMark\\Tests\\Functional\\": "tests/functional"
+        }
+    }
+}
