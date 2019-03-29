@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Implicit Figurescommonmark-php Test Suite" tests="11" assertions="28" failures="0" errors="0" time="0.077696">
+    <testsuite name="DoW\CommonMark\Tests\Functional\ImplicitFiguresTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/functional/ImplicitFiguresTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.051251">
+      <testcase name="testNotLinkableFigure" class="DoW\CommonMark\Tests\Functional\ImplicitFiguresTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/functional/ImplicitFiguresTest.php" line="12" assertions="1" time="0.051251"/>
+    </testsuite>
+    <testsuite name="DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/unit/Block/Renderer/ImplicitFiguresRendererTest.php" tests="8" assertions="22" failures="0" errors="0" time="0.025866">
+      <testsuite name="DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures" tests="7" assertions="21" failures="0" errors="0" time="0.002400">
+        <testcase name="testRenderImplicitFigures with data set #0" assertions="3" time="0.001419"/>
+        <testcase name="testRenderImplicitFigures with data set #1" assertions="3" time="0.000173"/>
+        <testcase name="testRenderImplicitFigures with data set #2" assertions="3" time="0.000155"/>
+        <testcase name="testRenderImplicitFigures with data set #3" assertions="3" time="0.000155"/>
+        <testcase name="testRenderImplicitFigures with data set #4" assertions="3" time="0.000197"/>
+        <testcase name="testRenderImplicitFigures with data set #5" assertions="3" time="0.000149"/>
+        <testcase name="testRenderImplicitFigures with data set #6" assertions="3" time="0.000152"/>
+      </testsuite>
+      <testcase name="testRenderWithInvalidType" class="DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/unit/Block/Renderer/ImplicitFiguresRendererTest.php" line="80" assertions="1" time="0.023466"/>
+    </testsuite>
+    <testsuite name="DoW\CommonMark\Tests\Unit\Inline\Renderer\FigCaptionRendererTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/unit/Inline/Renderer/FigCaptionRendererTest.php" tests="2" assertions="5" failures="0" errors="0" time="0.000579">
+      <testcase name="testRender" class="DoW\CommonMark\Tests\Unit\Inline\Renderer\FigCaptionRendererTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/unit/Inline/Renderer/FigCaptionRendererTest.php" line="25" assertions="4" time="0.000295"/>
+      <testcase name="testRenderWithInvalidType" class="DoW\CommonMark\Tests\Unit\Inline\Renderer\FigCaptionRendererTest" file="/Volumes/ddflo/Development/dow/phpleague-commonmark-implicit-figures/tests/unit/Inline/Renderer/FigCaptionRendererTest.php" line="42" assertions="1" time="0.000284"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

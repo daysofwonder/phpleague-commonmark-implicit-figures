@@ -1,0 +1,13 @@
+TAP version 13
+ok 1 - DoW\CommonMark\Tests\Functional\ImplicitFiguresTest::testNotLinkableFigure
+ok 2 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #0 (null, null, null)
+ok 3 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #1 ('http://test.png')
+ok 4 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #2 ('http://test.png', '')
+ok 5 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #3 ('http://test.png', 'Super Test')
+ok 6 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #4 ('http://test.png', 'Super Test 2', 'http://link.to')
+ok 7 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #5 ('http://test.png', null, 'http://link.to')
+ok 8 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderImplicitFigures with data set #6 ('http://test.png', ' ', 'http://link.to')
+ok 9 - DoW\CommonMark\Tests\Unit\Block\Renderer\ImplicitFiguresRendererTest::testRenderWithInvalidType
+ok 10 - DoW\CommonMark\Tests\Unit\Inline\Renderer\FigCaptionRendererTest::testRender
+ok 11 - DoW\CommonMark\Tests\Unit\Inline\Renderer\FigCaptionRendererTest::testRenderWithInvalidType
+1..11

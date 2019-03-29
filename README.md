@@ -1,6 +1,6 @@
 # CommonMark task Lists
 
-[![License](https://github.com/daysofwonder/phpleague-commonmark-implicit-figures/blob/master/LICENSE)](https://github.com/daysofwonder/phpleague-commonmark-implicit-figures/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square)](https://github.com/daysofwonder/phpleague-commonmark-implicit-figures/blob/master/LICENSE)
 
 Render images occurring by itself in a paragraph as `<figure><img ...></figure>`, clearly inspired from markdown-it-implicit-figures and similar to [pandoc's implicit figures](http://pandoc.org/README.html#images).
 
