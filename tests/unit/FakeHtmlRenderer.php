@@ -46,12 +46,17 @@ class FakeHtmlRenderer implements ElementRendererInterface
         return $this->options[$option];
     }
 
+    public function renderInline(AbstractInline $inline) : string
+    {
+        return "::inline::";
+    }
+
     /**
      * @param AbstractInline[] $inlines
      *
      * @return string
      */
-    public function renderInlines($inlines)
+    public function renderInlines(iterable $inlines) : string
     {
         return '::inlines::';
     }
@@ -64,7 +69,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false)
+    public function renderBlock(AbstractBlock $block, $inTightList = false) : string
     {
         return '::block::';
     }
@@ -75,7 +80,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlocks($blocks, $inTightList = false)
+    public function renderBlocks(iterable $blocks, $inTightList = false) : string
     {
         return '::blocks::';
     }

@@ -32,15 +32,15 @@ class FigCaptionRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('figcaption', $result->getTagName());
-        $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::inlines::', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
     /**
-     * @expectedException \InvalidArgumentException
      */
     public function testRenderWithInvalidType()
     {
+        $this->expectException('\InvalidArgumentException');
         $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

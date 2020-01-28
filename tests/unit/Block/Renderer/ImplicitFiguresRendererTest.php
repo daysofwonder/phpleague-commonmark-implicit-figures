@@ -55,9 +55,9 @@ class ImplicitFiguresRendererTest extends TestCase
         }
         if ($link && !empty(trim($link))) {
             $link = trim($link);
-            $this->assertContains("<a href=\"$link\">$base</a>", $result->getContents(true));
+            $this->assertStringContainsString("<a href=\"$link\">$base</a>", $result->getContents(true));
         } else {
-            $this->assertContains($base, $result->getContents(true));
+            $this->assertStringContainsString($base, $result->getContents(true));
         }
     }
 
@@ -75,10 +75,10 @@ class ImplicitFiguresRendererTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
      */
     public function testRenderWithInvalidType()
     {
+        $this->expectException('\InvalidArgumentException');
         $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
 
         $this->renderer->render($inline, $this->htmlRenderer);

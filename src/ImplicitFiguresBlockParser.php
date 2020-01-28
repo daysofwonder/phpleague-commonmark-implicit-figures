@@ -1,11 +1,11 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\Block\Parser\AbstractBlockParser;
+use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class ImplicitFiguresBlockParser extends AbstractBlockParser
+class ImplicitFiguresBlockParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context
@@ -13,7 +13,7 @@ class ImplicitFiguresBlockParser extends AbstractBlockParser
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(ContextInterface $context, Cursor $cursor) : bool
     {
         $tmpCursor = clone $cursor;
         $tmpCursor->advanceToNextNonSpaceOrTab();
