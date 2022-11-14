@@ -1,13 +1,13 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\Xml;
 
-class FigCaptionRenderer implements InlineRendererInterface
+class FigCaptionRenderer implements NodeRendererInterface
 {
     /**
      * @param FigCaption               $inline
@@ -15,17 +15,17 @@ class FigCaptionRenderer implements InlineRendererInterface
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof FigCaption)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        if (!($node instanceof FigCaption)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($node));
         }
 
         $attrs = [];
-        foreach ($inline->getData('attributes', []) as $key => $value) {
+        foreach ($node->data['attributes'] as $key => $value) {
             $attrs[$key] = Xml::escape($value);
         }
 
-        return new HtmlElement('figcaption', $attrs, $htmlRenderer->renderInlines($inline->children()));
+        return new HtmlElement('figcaption', $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

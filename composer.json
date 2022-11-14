@@ -4,8 +4,8 @@
     "keywords": ["markdown","parser","commonmark", "figure"],
     "type": "library",
     "require": {
-        "php": "^7.2",
-        "league/commonmark": "^1.0"
+        "php": "^7.4",
+        "league/commonmark": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7"

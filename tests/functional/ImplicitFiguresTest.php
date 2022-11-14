@@ -11,14 +11,14 @@ class ImplicitFiguresTest extends TestCase
      */
     public function testNotLinkableFigure()
     {
-        $environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
+        $environment = \League\CommonMark\Environment\Environment::createCommonMarkEnvironment();
         $environment->addExtension(new \DoW\CommonMark\ImplicitFigures\Extension());
-        $converter = new \League\CommonMark\Converter(new \League\CommonMark\DocParser($environment), new \League\CommonMark\HtmlRenderer($environment));
+        $converter = new \League\CommonMark\MarkdownConverter($environment);
 
         $mdContent = trim(file_get_contents($this->getPathToData('input.md')));
         $expectedContents = trim(file_get_contents($this->getPathToData('input.html')));
 
-        $this->assertEquals($expectedContents, trim($converter->convertToHtml($mdContent)));
+        $this->assertEquals($expectedContents, trim($converter->convertToHtml($mdContent)->getContent()));
     }
 
     /**

@@ -1,20 +1,20 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface as LeagueExtensionInterface;
 
 class Extension implements LeagueExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(EnvironmentBuilderInterface $environment) : void
     {
-        $environment->addBlockParser(
-            new ImplicitFiguresBlockParser()
+        $environment->addBlockStartParser(
+            ImplicitFiguresBlockParser::createBlockStartParser()
         );
-        $environment->addBlockRenderer(
+        $environment->addRenderer(
             ImplicitFigures::class, new ImplicitFiguresRenderer(), 0
         );
-        $environment->addInlineRenderer(
+        $environment->addRenderer(
             FigCaption::class, new FigCaptionRenderer(), 0
         );
     }

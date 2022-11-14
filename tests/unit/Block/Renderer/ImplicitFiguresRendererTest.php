@@ -4,9 +4,9 @@ namespace DoW\CommonMark\Tests\Unit\Block\Renderer;
 use DoW\CommonMark\ImplicitFigures\ImplicitFigures;
 use DoW\CommonMark\ImplicitFigures\ImplicitFiguresRenderer;
 
-use League\CommonMark\Block\Element as BlockElement;
-use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 use DoW\CommonMark\Tests\Unit\FakeHtmlRenderer;
@@ -26,9 +26,9 @@ class ImplicitFiguresRendererTest extends TestCase
     protected function setUp() : void
     {
         $this->renderer = new ImplicitFiguresRenderer();
-        $env = \League\CommonMark\Environment::createCommonMarkEnvironment();
-        $env->addInlineRenderer('DoW\CommonMark\ImplicitFigures\FigCaption', new \DoW\CommonMark\ImplicitFigures\FigCaptionRenderer());
-        $this->htmlRenderer = new \League\CommonMark\HtmlRenderer($env);
+        $env = \League\CommonMark\Environment\Environment::createCommonMarkEnvironment();
+        $env->addRenderer('DoW\CommonMark\ImplicitFigures\FigCaption', new \DoW\CommonMark\ImplicitFigures\FigCaptionRenderer());
+        $this->htmlRenderer = new \League\CommonMark\Renderer\HtmlRenderer($env);
     }
 
     /**
@@ -79,7 +79,7 @@ class ImplicitFiguresRendererTest extends TestCase
     public function testRenderWithInvalidType()
     {
         $this->expectException('\InvalidArgumentException');
-        $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
+        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
 
         $this->renderer->render($inline, $this->htmlRenderer);
     }

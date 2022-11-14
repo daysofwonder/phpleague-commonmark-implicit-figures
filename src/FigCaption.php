@@ -1,7 +1,7 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 class FigCaption extends AbstractInline
 {

@@ -1,12 +1,13 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Inline\Element\Image;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
+use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Inline\Element\HtmlElement;
-use League\CommonMark\Cursor;
+use League\CommonMark\Parser\Cursor;
+use Dflydev\DotAccessData\Data;
 
 class ImplicitFigures extends AbstractBlock
 {
@@ -19,7 +20,7 @@ class ImplicitFigures extends AbstractBlock
      *
      * Used for storage of arbitrary data
      */
-    public $data = [];
+    public Data $data;
 
     /**
      * @var string
@@ -53,8 +54,8 @@ class ImplicitFigures extends AbstractBlock
         $this->src = trim($src);
         $this->title = $title && trim($title) ? trim($title) : null;
         $this->link = $link ? trim($link) : null;
-        $this->data = $attributes;
-        $this->data['data-type'] = 'image';
+        // $attributes['data-type'] = 'image';
+        $this->data = new Data(['attributes' => $attributes]);
 
         $parent = $this;
         if ($this->link) {

@@ -1,34 +1,34 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\ListBlock;
-use League\CommonMark\Block\Renderer\BlockRendererInterface;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\HtmlElement;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\Xml;
 
-class ImplicitFiguresRenderer implements BlockRendererInterface
+class ImplicitFiguresRenderer implements NodeRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof ImplicitFigures)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        if (!($node instanceof ImplicitFigures)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($node));
         }
 
         $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
+        foreach ($node->data['attributes'] as $key => $value) {
             $attrs[$key] = Xml::escape($value);
         }
 
         return new HtmlElement(
             'figure',
             $attrs,
-            $htmlRenderer->getOption('inner_separator', "\n") .
-                $htmlRenderer->renderInlines(
-                    $block->children()
+            $childRenderer->getInnerSeparator() .
+                $childRenderer->renderNodes(
+                    $node->children()
                 ) .
-                $htmlRenderer->getOption('inner_separator', "\n")
+                $childRenderer->getInnerSeparator()
         );
     }
 }

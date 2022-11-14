@@ -1,65 +1,100 @@
 <?php
 namespace DoW\CommonMark\ImplicitFigures;
 
-use League\CommonMark\Block\Parser\BlockParserInterface;
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
+use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
+use League\CommonMark\Parser\Block\BlockStartParserInterface;
+use League\CommonMark\Parser\Block\BlockContinue;
+use League\CommonMark\Parser\Block\BlockContinueParserInterface;
+use League\CommonMark\Parser\Cursor;
+use League\CommonMark\Parser\MarkdownParserStateInterface;
+use League\CommonMark\Parser\Block\BlockStart;
 
-class ImplicitFiguresBlockParser implements BlockParserInterface
+final class ImplicitFiguresBlockParser extends AbstractBlockContinueParser
 {
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return bool
-     */
-    public function parse(ContextInterface $context, Cursor $cursor) : bool
+    private ImplicitFigures $block;
+
+    public function __construct(ImplicitFigures $block)
     {
-        $tmpCursor = clone $cursor;
-        $tmpCursor->advanceToNextNonSpaceOrTab();
-        $rest = $tmpCursor->getRemainder();
+        $this->block = $block;
+    }
 
-        // Figure pattern: ^!\[(?P<title>[^]]*)\]\((?P<src>[^)]*)\)\s*$
-        // Figure with link pattern: ^\[!\[(?P<title>[^]]*)\]\((?P<src>[^)]*)\)\]\((?P<link>[^)]*)\)\s*$
+    public function getBlock() : ImplicitFigures
+    {
+        return $this->block;
+    }
 
-        $matches = [];
-        $imgBlockPattern = '!\[(?P<title>[^]]*)\]\((?P<src>[^)]*)\)';
+    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
+    {
+        return BlockContinue::finished();
+    }
 
-        $src = null;
-        $figures = null;
-        $link = null;
+    public static function createBlockStartParser() : BlockStartParserInterface
+    {
+        return new class implements BlockStartParserInterface
+        {
+            /**
+             * @param ContextInterface $context
+             * @param Cursor           $cursor
+             *
+             * @return bool
+             */
+            public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
+            {
+                $tmpCursor = clone $cursor;
+                $tmpCursor->advanceToNextNonSpaceOrTab();
+                $rest = $tmpCursor->getRemainder();
 
-        if (preg_match("/^$imgBlockPattern\s*$/", $rest, $matches) === 1) {
-            $src = trim($matches['src']);
-            $title = empty(trim($matches['title'])) ? null : trim($matches['title']);
-        } elseif (preg_match("/^\[$imgBlockPattern\]\((?P<link>[^)]*)\)\s*$/", $rest, $matches) === 1) {
-            $src = trim($matches['src']);
-            $title = empty(trim($matches['title'])) ? null : trim($matches['title']);
-            $link = trim($matches['link']);
-        } else {
-            return false;
-        }
+                // Figure pattern: ^!\[(?P<title>[^]]*)\]\((?P<src>[^)]*)\)\s*$
+                // Figure with link pattern: ^\[!\[(?P<title>[^]]*)\]\((?P<src>[^)]*)\)\]\((?P<link>[^)]*)\)\s*$
 
-        $markerLength = strlen($matches[0]);
+                $matches = [];
+                $imgBlockPattern = '!\[(?P<title>[^]]*)\]\((?P<src>[^)]*)\)';
 
-        // Make sure we have nothing or spaces after
-        $nextChar = $tmpCursor->peek($markerLength);
-        if (!($nextChar === null || $nextChar === "\t" || $nextChar === ' ')) {
-            return false;
-        }
+                $src = null;
+                $figures = null;
+                $link = null;
 
-        // We've got a match! Advance offset and calculate padding
-        $cursor->advanceToNextNonSpaceOrTab(); // to start of marker
-        $cursor->advanceBy($markerLength, true); // to end of marker
+                if (preg_match("/^$imgBlockPattern\s*$/", $rest, $matches) === 1) {
+                    $src = trim($matches['src']);
+                    $title = empty(trim($matches['title'])) ? null : trim($matches['title']);
+                } elseif (preg_match("/^\[$imgBlockPattern\]\((?P<link>[^)]*)\)\s*$/", $rest, $matches) === 1) {
+                    $src = trim($matches['src']);
+                    $title = empty(trim($matches['title'])) ? null : trim($matches['title']);
+                    $link = trim($matches['link']);
+                } else {
+                    return BlockStart::none();
+                }
 
-        $context->addBlock(
-            new ImplicitFigures(
-                $matches['src'],
-                empty(trim($matches['title'])) ? null : $matches['title'],
-                $matches['link'] ?? null
-            )
-        );
+                $markerLength = strlen($matches[0]);
 
-        return true;
+                // Make sure we have nothing or spaces after
+                $nextChar = $tmpCursor->peek($markerLength);
+                if (!($nextChar === null || $nextChar === "\t" || $nextChar === ' ')) {
+                    return false;
+                }
+
+                // We've got a match! Advance offset and calculate padding
+                $cursor->advanceToNextNonSpaceOrTab(); // to start of marker
+                $cursor->advanceBy($markerLength, true); // to end of marker
+
+                return BlockStart::of(new ImplicitFiguresBlockParser(
+                    new ImplicitFigures(
+                        $matches['src'],
+                        empty(trim($matches['title'])) ? null : $matches['title'],
+                        $matches['link'] ?? null
+                    )
+                ))->at($cursor);
+                //
+                // $parserState->addBlock(
+                //     new ImplicitFigures(
+                //         $matches['src'],
+                //         empty(trim($matches['title'])) ? null : $matches['title'],
+                //         $matches['link'] ?? null
+                //     )
+                // );
+                //
+                // return true;
+            }
+        };
     }
 }

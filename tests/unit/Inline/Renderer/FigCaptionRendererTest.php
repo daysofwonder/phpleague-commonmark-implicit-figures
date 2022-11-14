@@ -4,8 +4,8 @@ namespace DoW\CommonMark\Tests\Unit\Inline\Renderer;
 use DoW\CommonMark\ImplicitFigures\FigCaption;
 use DoW\CommonMark\ImplicitFigures\FigCaptionRenderer;
 
-use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element as InlineElement;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Node\Inline\AbstractInline;
 use PHPUnit\Framework\TestCase;
 
 use DoW\CommonMark\Tests\Unit\FakeHtmlRenderer;
@@ -32,7 +32,7 @@ class FigCaptionRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('figcaption', $result->getTagName());
-        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
@@ -41,7 +41,7 @@ class FigCaptionRendererTest extends TestCase
     public function testRenderWithInvalidType()
     {
         $this->expectException('\InvalidArgumentException');
-        $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
+        $inline = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

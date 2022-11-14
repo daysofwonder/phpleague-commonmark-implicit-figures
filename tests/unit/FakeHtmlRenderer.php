@@ -14,11 +14,11 @@
 
 namespace DoW\CommonMark\Tests\Unit;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Node\Inline\AbstractInline;
 
-class FakeHtmlRenderer implements ElementRendererInterface
+class FakeHtmlRenderer implements ChildNodeRendererInterface
 {
     protected $options;
 
@@ -46,42 +46,79 @@ class FakeHtmlRenderer implements ElementRendererInterface
         return $this->options[$option];
     }
 
-    public function renderInline(AbstractInline $inline) : string
-    {
-        return "::inline::";
-    }
+    // public function renderInline(AbstractInline $inline) : string
+    // {
+    //     return "::inline::";
+    // }
 
     /**
      * @param AbstractInline[] $inlines
      *
      * @return string
      */
-    public function renderInlines(iterable $inlines) : string
+    public function renderNodes(iterable $nodes) : string
     {
-        return '::inlines::';
+        $output = '::';
+
+        if (count($nodes) === 0) {
+            return '';
+        }
+
+        if ($nodes[0] instanceof AbstractBlock) {
+            $output .= 'block';
+        } else {
+            $output .= 'inline';
+        }
+
+        if (count($nodes) > 1) {
+            $output .= 's';
+        }
+
+        return $output .= '::';
+        //
+        // foreach ($nodes as $node) {
+        //     if (! $isFirstItem && $node instanceof AbstractBlock) {
+        //         $output .= $this->getBlockSeparator();
+        //     }
+        //
+        //     $output .= $this->renderNode($node);
+        //
+        //     $isFirstItem = false;
+        // }
+        // return '::inlines::';
+    }
+    //
+    // /**
+    //  * @param AbstractBlock $block
+    //  * @param bool          $inTightList
+    //  *
+    //  * @throws \RuntimeException
+    //  *
+    //  * @return string
+    //  */
+    // public function renderBlock(AbstractBlock $block, $inTightList = false) : string
+    // {
+    //     return '::block::';
+    // }
+    //
+    // /**
+    //  * @param AbstractBlock[] $blocks
+    //  * @param bool            $inTightList
+    //  *
+    //  * @return string
+    //  */
+    // public function renderBlocks(iterable $blocks, $inTightList = false) : string
+    // {
+    //     return '::blocks::';
+    // }
+
+    public function getBlockSeparator() : string
+    {
+        return '';
     }
 
-    /**
-     * @param AbstractBlock $block
-     * @param bool          $inTightList
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    public function renderBlock(AbstractBlock $block, $inTightList = false) : string
+    public function getInnerSeparator() : string
     {
-        return '::block::';
-    }
-
-    /**
-     * @param AbstractBlock[] $blocks
-     * @param bool            $inTightList
-     *
-     * @return string
-     */
-    public function renderBlocks(iterable $blocks, $inTightList = false) : string
-    {
-        return '::blocks::';
+        return '';
     }
 }
