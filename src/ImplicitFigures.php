@@ -44,14 +44,14 @@ class ImplicitFigures extends AbstractBlock
     public $link = null;
 
     /**
-     * @param string      $src
+     * @param string|null      $src
      * @param string|null $title
      * @param string|null $title
      * @param array       $attributes
      */
     public function __construct(?string $src, ?string $title = null, ?string $link = null, array $attributes = [])
     {
-        $this->src = trim($src);
+        $this->src = $src && trim($src) ? trim($src) : '';
         $this->title = $title && trim($title) ? trim($title) : null;
         $this->link = $link ? trim($link) : null;
         // $attributes['data-type'] = 'image';

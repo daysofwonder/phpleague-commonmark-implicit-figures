@@ -83,17 +83,8 @@ final class ImplicitFiguresBlockParser extends AbstractBlockContinueParser
                         empty(trim($matches['title'])) ? null : $matches['title'],
                         $matches['link'] ?? null
                     )
-                ))->at($cursor);
-                //
-                // $parserState->addBlock(
-                //     new ImplicitFigures(
-                //         $matches['src'],
-                //         empty(trim($matches['title'])) ? null : $matches['title'],
-                //         $matches['link'] ?? null
-                //     )
-                // );
-                //
-                // return true;
+                ))
+                ->at($cursor);
             }
         };
     }

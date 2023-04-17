@@ -32,13 +32,13 @@ class ImplicitFiguresRendererTest extends TestCase
     }
 
     /**
-     * @param string      $src
+     * @param string|null $src
      * @param string|null $title
      * @param string|null $title
      *
      * @dataProvider dataForTestImplicitFigures
      */
-    public function testRenderImplicitFigures($src, $title = null, $link = null)
+    public function testRenderImplicitFigures($src = null, $title = null, $link = null)
     {
         $figure = $this->createImplicitFiguresBlock($src, $title, $link);
         $result = $this->renderer->render($figure, $this->htmlRenderer);
@@ -84,7 +84,7 @@ class ImplicitFiguresRendererTest extends TestCase
         $this->renderer->render($inline, $this->htmlRenderer);
     }
 
-    protected function createImplicitFiguresBlock($src, $title = null, $link = null)
+    protected function createImplicitFiguresBlock($src = null, $title = null, $link = null)
     {
         $block = new ImplicitFigures(
             $src,
